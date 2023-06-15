@@ -12,6 +12,7 @@ use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('test', TestController::class);
+Route::get('getToken', [TestController::class, 'getToken']);
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

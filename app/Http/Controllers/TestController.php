@@ -3,9 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class TestController extends Controller
 {
+    public function getToken()
+    {
+        $client = new Client();
+
+        $response = $client->request('POST', 'https://zoom.us/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'account_credentials',
+                'account_id' => '8FnuhCgPSumbtIUkJgKfzA',
+            ],
+            'headers' => [
+                'Host' => 'zoom.us',
+                'Authorization' => 'Basic MGNLV05zZnBSZFNNNjNXN3BzZExzdzpZMlJkNXl6V2NMdmcxbWRRUVE0cGxPNFkzVlF6VGNIUg==',
+            ],
+        ]);
+
+        $body = $response->getBody();
+        $contents = $body->getContents();
+        return json_decode($contents);
+    }
     /**
      * Display a listing of the resource.
      *
